@@ -1,4 +1,4 @@
-# JLPT Practice
+# JLPT Practice Application
 
 JLPTの「文字・語彙・文法」分野に特化した練習問題システムです。教師が生徒に対して練習問題をアサインし、学習進捗を管理できます。
 
@@ -49,8 +49,43 @@ JLPTの「文字・語彙・文法」分野に特化した練習問題システ�
   - 回答日時
   - 解答所要時間
 
+## 機能一覧
+
+### メール通知機能 🔔
+- ユーザーごとのメール通知設定
+  - 練習セットのアサイン通知
+  - 期限切れ警告通知
+  - システムメンテナンス通知
+- 通知頻度の設定
+- HTMLメール対応
+- 多言語テンプレート対応
+
+## 環境変数
+
+### メール設定
+```env
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=your-smtp-username
+SMTP_PASS=your-smtp-password
+MAIL_FROM=noreply@example.com
+```
+
 ## 開発環境のセットアップ
 （追加予定）
+
+## セットアップ手順
+
+### メール通知のセットアップ
+1. `.env`ファイルにSMTP設定を追加
+2. メールテンプレートの配置
+   ```bash
+   cp templates/mail/* src/templates/mail/
+   ```
+3. メール通知設定の確認
+   ```bash
+   npm run check-mail-config
+   ```
 
 ## ライセンス
 （追加予定）
