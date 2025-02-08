@@ -1,12 +1,18 @@
 {
   "name": "jlpt-practice",
+  "private": true,
   "scripts": {
-    "dev": "bun run --hot src/index.ts"
+    "dev:server": "bun run --hot server/src/index.ts",
+    "dev:client": "bun run --hot client/src/index.tsx",
+    "dev": "bun run dev:server & bun run dev:client",
+    "test": "bun test"
   },
-  "dependencies": {
-    "hono": "^4.6.20"
-  },
+  "workspaces": [
+    "server",
+    "client"
+  ],
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "typescript": "^5.4.2"
   }
 }
