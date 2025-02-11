@@ -2,9 +2,15 @@
   "name": "@jlpt-practice/server",
   "private": true,
   "dependencies": {
-    "hono": "^4.6.20"
+    "hono": "^4.6.20",
+    "csv-parse": "^5.5.3",
+    "nanoid": "^5.0.6"
   },
   "devDependencies": {
     "@types/bun": "latest"
+  },
+  "scripts": {
+    "setup-db": "bun run src/scripts/setupDb.ts",
+    "seed-db": "bun run src/scripts/seedDb.ts"
   }
 } 
