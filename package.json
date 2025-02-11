@@ -5,14 +5,18 @@
     "dev:server": "bun run --hot server/src/index.ts",
     "dev:client": "bun run --hot client/src/index.tsx",
     "dev": "bun run dev:server & bun run dev:client",
-    "test": "bun test"
+    "test": "bun test",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx}\""
   },
   "workspaces": [
     "server",
     "client"
   ],
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/bun": "latest",
+    "prettier": "^3.5.0",
     "typescript": "^5.4.2"
   }
 }
