@@ -1,6 +1,6 @@
 import { getDatabase } from '../db/schema'
-import { Question } from '../types'
 import { generateId } from '../services/base'
+import { Question } from '../types'
 
 export class QuestionService {
   private db = getDatabase()
@@ -12,7 +12,7 @@ export class QuestionService {
     offset?: number
   }): Promise<Question[]> {
     const { category, level, limit = 10, offset = 0 } = params
-    
+
     let query = 'SELECT * FROM questions'
     const conditions: string[] = []
     const values: any[] = []
@@ -38,48 +38,51 @@ export class QuestionService {
 
     return result.map(row => ({
       ...row,
-      options: JSON.parse(row.options)
+      options: JSON.parse(row.options),
     }))
   }
 
   async getQuestionById(id: string): Promise<Question | null> {
-    const result = this.db.query('SELECT * FROM questions WHERE id = ?')
-      .get(id) as any
+    const result = this.db.query('SELECT * FROM questions WHERE id = ?').get(id) as any
 
     if (!result) return null
 
     return {
       ...result,
-      options: JSON.parse(result.options)
+      options: JSON.parse(result.options),
     }
   }
 
   async createQuestion(data: Omit<Question, 'id' | 'created_at'>): Promise<Question> {
     const id = generateId()
     const now = new Date().toISOString()
-    
+
     const question = {
       id,
       ...data,
-      created_at: now
+      created_at: now,
     }
 
-    this.db.query(`
+    this.db
+      .query(
+        `
       INSERT INTO questions (
         id, category, level, question, options, 
         correct_index, explanation, created_at
       )
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `).run(
-      question.id,
-      question.category,
-      question.level,
-      question.question,
-      JSON.stringify(question.options),
-      question.correct_index,
-      question.explanation,
-      question.created_at
-    )
+    `
+      )
+      .run(
+        question.id,
+        question.category,
+        question.level,
+        question.question,
+        JSON.stringify(question.options),
+        question.correct_index,
+        question.explanation,
+        question.created_at
+      )
 
     return question
   }
