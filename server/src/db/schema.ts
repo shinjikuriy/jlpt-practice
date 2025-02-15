@@ -1,6 +1,8 @@
 import { Database } from 'bun:sqlite'
+import { mkdir } from 'node:fs/promises'
+import { dirname } from 'node:path'
 
-import { Answer, Practice, Question, User } from '../types'
+import { DB_PATH } from '../config'
 
 export function setupDatabase(db: Database): void {
   // トランザクションで全てのテーブルを作成
@@ -12,7 +14,10 @@ export function setupDatabase(db: Database): void {
       email TEXT UNIQUE NOT NULL,
       password_hash TEXT NOT NULL,
       role TEXT CHECK(role IN ('teacher', 'student')) NOT NULL,
-      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+      created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+      login_attempts INTEGER DEFAULT 0,
+      last_attempt_time TEXT,
+      locked_until TEXT
     )`
     ).run()
 
@@ -68,12 +73,13 @@ export function setupDatabase(db: Database): void {
   })()
 }
 
-// データベース接続のシングルトンインスタンス
 let db: Database | null = null
 
-export function getDatabase(): Database {
+export async function getDatabase(): Promise<Database> {
   if (!db) {
-    db = new Database('practice_app.db')
+    // データベースディレクトリの作成
+    await mkdir(dirname(DB_PATH), { recursive: true })
+    db = new Database(DB_PATH)
     setupDatabase(db)
   }
   return db

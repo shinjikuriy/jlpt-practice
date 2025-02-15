@@ -4,6 +4,9 @@ export interface User {
   password_hash: string
   role: 'teacher' | 'student'
   created_at: string
+  login_attempts: number
+  last_attempt_time: string | null
+  locked_until: string | null
 }
 
 export interface Question {
@@ -45,4 +48,10 @@ export interface Answer {
   selected_choice: number
   is_correct: boolean
   answered_at: string
+}
+
+declare module 'hono' {
+  interface ContextVariableMap {
+    user: User
+  }
 }

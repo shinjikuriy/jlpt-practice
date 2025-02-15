@@ -10,7 +10,7 @@
     "@types/bun": "latest"
   },
   "scripts": {
-    "setup-db": "bun run src/scripts/setupDb.ts",
-    "seed-db": "bun run src/scripts/seedDb.ts"
+    "setup-db": "bun run scripts/setup.ts",
+    "seed-db": "bun run scripts/seed.ts"
   }
 } 

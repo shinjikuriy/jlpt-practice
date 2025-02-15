@@ -87,5 +87,27 @@ MAIL_FROM=noreply@example.com
    npm run check-mail-config
    ```
 
+### データベースの再作成
+If you need to recreate the database due to schema changes during development, follow these steps:
+
+```bash
+# 1. Stop the application
+
+# 2. Delete the database file
+rm server/data/db/practice_app.db
+
+# 3. Start the application
+# (The database will be automatically created with the new schema)
+bun run dev
+
+# 4. Seed initial data (if needed)
+bun run setup-db
+```
+
+**Important Notes:**
+- This operation will delete all data in the database
+- Only perform this in development environment
+- Make sure to notify team members when database recreation is required
+
 ## ライセンス
 （追加予定）
