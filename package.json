@@ -1,7 +1,8 @@
 {
   "name": "jlpt-practice",
   "scripts": {
-    "dev": "bun run --watch --console src/server/index.ts"
+    "dev": "bun run --watch --console src/server/index.ts",
+    "quiz": "bun run src/cli/quiz.ts"
   },
   "dependencies": {
     "hono": "^4.9.9"
